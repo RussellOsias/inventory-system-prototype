@@ -1,0 +1,290 @@
+/* General Styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-image: linear-gradient(to bottom, rgba(30, 144, 255, 0.8), rgba(255, 255, 255, 0.8)), url('assets/image.jpg'); /* Gradient overlay */
+    background-size: cover; /* Makes the image cover the whole background */
+    background-position: center; /* Centers the background image */
+    background-attachment: fixed; /* Makes the background fixed */
+    min-height: 100vh; /* Ensures the body takes full height */
+    color: #333;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(30, 144, 255, 0.9); /* Semi-transparent background */
+    padding: 15px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Stays on top of other content */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Adds shadow for depth */
+    transform: translateY(-100%); /* Start hidden above */
+    animation: slideDown 0.5s forwards; /* Slide down effect */
+}
+
+@keyframes slideDown {
+    to {
+        transform: translateY(0); /* Move to original position */
+    }
+}
+
+.navbar a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+}
+
+.navbar a:hover {
+    background-color: rgba(0, 92, 191, 0.8);
+    transform: scale(1.1); /* Slightly enlarge the button */
+}
+
+/* Sidebar */
+.sidebar {
+    height: 100vh;
+    width: 250px;
+    position: fixed;
+    background-color: rgba(30, 144, 255, 0.9); /* Semi-transparent background */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    top: 0;
+    left: -250px; /* Start hidden off-screen */
+    animation: slideIn 0.5s forwards; /* Slide in effect */
+}
+
+@keyframes slideIn {
+    to {
+        left: 0; /* Move to original position */
+    }
+}
+
+.sidebar a {
+    padding: 15px;
+    text-decoration: none;
+    color: white;
+    border-bottom: 1px solid rgba(0, 92, 191, 0.5);
+    transition: background-color 0.3s; /* Transition effect */
+}
+
+.sidebar a:hover {
+    background-color: rgba(0, 92, 191, 0.8);
+}
+
+/* Content */
+.content {
+    margin-left: 270px; /* Leave space for the sidebar */
+    padding: 20px;
+    transition: margin-left 0.3s; /* Smooth transition */
+    animation: fadeInUp 0.5s forwards; /* Fade in and slide up effect */
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Start 20px lower */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Move to original position */
+    }
+}
+
+/* Container for content */
+.container {
+    width: 90%;
+    max-width: 800px; /* Increased max width */
+    margin: auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s; /* Container hover effect */
+}
+
+.container:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+}
+
+/* Header */
+.header {
+    background-color: #1e90ff;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+/* Form Container */
+.form-container {
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.form-container input[type="text"],
+.form-container input[type="password"],
+.form-container input[type="number"],
+.form-container select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s; /* Transition effects */
+}
+
+.form-container input:focus,
+.form-container select:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 5px rgba(30, 144, 255, 0.5); /* Focus effect */
+}
+
+/* Buttons */
+.form-container button {
+    width: 100%;
+    padding: 12px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+}
+
+.form-container button:hover {
+    background-color: #005cbf;
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Notification Container */
+.notification-container {
+    padding: 20px;
+    background-color: rgba(249, 249, 249, 0.9); /* Semi-transparent background */
+    border-radius: 8px;
+}
+
+/* Notification */
+.notification {
+    background-color: #ffefba;
+    padding: 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+.table-container {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent */
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.table th {
+    background-color: #1e90ff;
+    color: white;
+}
+
+.table td {
+    background-color: rgba(240, 248, 255, 0.8); /* Slightly transparent */
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 10px;
+}
+
+/* Inventory Layout */
+.inventory-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.inventory-column {
+    flex: 1;
+    background-color: rgba(240, 248, 255, 0.8); /* Slightly transparent */
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.inventory-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: white;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+.item-actions button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    border-radius: 4px;
+    background-color: #1e90ff;
+    color: white;
+    transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+}
+
+.item-actions button:hover {
+    background-color: #005cbf;
+    transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .navbar, .sidebar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content {
+        margin-left: 0; /* No margin on small screens */
+    }
+
+    .inventory-container {
+        flex-direction: column; /* Stack columns on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .header {
+        font-size: 20px; /* Smaller header on small screens */
+    }
+
+    .form-container button {
+        font-size: 14px; /* Smaller button text */
+    }
+}

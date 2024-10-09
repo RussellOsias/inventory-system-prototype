@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e90ff;
+            padding: 10px;
+            color: white;
+            margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #005cbf;
+        }
+
+        /* Content */
+        .content {
+            padding: 20px;
+        }
+
+        h2 {
+            color: #1e90ff; /* Highlighted color for headings */
+            margin-bottom: 20px;
+        }
+
+        /* Notification Container */
+        .notification-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+
+        .notification {
+            padding: 10px;
+            border-bottom: 1px solid #ddd; /* Separate notifications */
+        }
+
+        .notification:last-child {
+            border-bottom: none; /* Remove border from the last notification */
+        }
+
+        .notification strong {
+            color: #1e90ff; /* Highlight strong text for better visibility */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .notification {
+                font-size: 14px; /* Adjust font size for mobile */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar hidden" id="navbar">
+        <a href="request.html">Request Items</a>
+        <a href="request_approved.html">Approved Requests</a>
+        <a href="request_declined.html">Declined Requests</a>
+        <a href="request_notification.html">Notifications</a>
+    </div>
+    <div class="content">
+        <h2>Notifications</h2>
+        <div class="notification-container">
+            <!-- Approved Notifications -->
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Laboratory Microscope</strong> has been approved and will be delivered by <strong>2024-10-10</strong>.
+            </div>
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Projector</strong> has been approved and will be delivered by <strong>2024-10-15</strong>.
+            </div>
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Whiteboard Markers</strong> has been approved and will be delivered by <strong>2024-10-22</strong>.
+            </div>
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Desks</strong> has been approved and will be delivered by <strong>2024-10-23</strong>.
+            </div>
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Chairs</strong> has been approved and will be delivered by <strong>2024-10-24</strong>.
+            </div>
+            <div class="notification">
+                <strong>Approved:</strong> Your request for <strong>Computer Laptops</strong> has been approved and will be delivered by <strong>2024-10-20</strong>.
+            </div>
+
+            <!-- Declined Notifications -->
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Experimental Chemistry Kit</strong> was declined due to budget constraints.
+            </div>
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Additional Laboratory Supplies</strong> was declined due to resource limitations.
+            </div>
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Textbooks for Literature Course</strong> was declined due to policy restrictions.
+            </div>
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Microscopes</strong> was declined due to insufficient funding.
+            </div>
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Conference Room Projector</strong> was declined due to scheduling conflicts.
+            </div>
+            <div class="notification">
+                <strong>Declined:</strong> Your request for <strong>Server Upgrade</strong> was declined pending further review.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

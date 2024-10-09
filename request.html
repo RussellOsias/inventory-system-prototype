@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Items</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Styles here are the same as before, keeping consistent with your previous code */
+        .searchable-select {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .quantity-info {
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="request.html">Request Items</a>
+        <a href="request_approved.html">Approved Requests</a>
+        <a href="request_declined.html">Declined Requests</a>
+        <a href="request_notification.html">Notifications</a>
+        <a href="request_login.html">Logout</a>
+    </div>
+    
+    <div class="container">
+        <div class="header" id="request-header">Request Items</div>
+        <div class="form-container" id="request-form">
+            <form onsubmit="event.preventDefault(); showConfirmation();">
+                
+                <label for="item-select">Choose Item</label>
+                <select required id="item-select" onchange="updateMaxQuantity()">
+                    <option value="">Select an Item</option>
+                    <!-- The items are dynamically populated through JavaScript -->
+                </select>
+
+                <div id="quantity-info" class="quantity-info hidden">Available: <span id="available-quantity"></span></div>
+
+                <label>Quantity</label>
+                <input type="number" id="quantity-input" placeholder="Enter Quantity" required min="1">
+
+                <label>Delivery Date (minimum 15 days from today)</label>
+                <input type="date" id="delivery-date" required>
+                
+                <button type="submit">Request</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Inventory data with 20 general items and equipment
+        const inventory = {
+            "Ballpoint Pen": 500,
+            "Notebook": 200,
+            "Desk Chair": 50,
+            "Study Table": 30,
+            "Printer": 20,
+            "Projector": 10,
+            "Whiteboard": 15,
+            "Laptop": 25,
+            "Tablet": 40,
+            "USB Flash Drive": 100,
+            "Keyboard": 75,
+            "Mouse": 80,
+            "Headphones": 60,
+            "Binder": 150,
+            "Stapler": 40,
+            "Highlighter": 200,
+            "Paper Ream": 50,
+            "Calculator": 35,
+            "File Folder": 300,
+            "Water Bottle": 100
+        };
+
+        // Populate items in the select dropdown
+        const itemSelect = document.getElementById('item-select');
+        Object.keys(inventory).forEach(item => {
+            const option = document.createElement('option');
+            option.value = item;
+            option.textContent = item;
+            itemSelect.appendChild(option);
+        });
+
+        // Update quantity information based on selected item
+        function updateMaxQuantity() {
+            const selectedItem = itemSelect.value;
+            const maxQuantity = inventory[selectedItem] || 1;
+            const quantityInput = document.getElementById('quantity-input');
+            quantityInput.max = maxQuantity;
+            quantityInput.value = '';
+            quantityInput.placeholder = `Max: ${maxQuantity}`;
+            document.getElementById('available-quantity').textContent = maxQuantity;
+            document.getElementById('quantity-info').classList.remove('hidden');
+        }
+
+        // Ensure the quantity does not exceed available stock
+        document.getElementById('quantity-input').addEventListener('input', function () {
+            const maxQuantity = parseInt(this.max, 10);
+            if (parseInt(this.value, 10) > maxQuantity) {
+                alert(`You can only request up to ${maxQuantity} units.`);
+                this.value = maxQuantity;
+            }
+        });
+
+        // Show confirmation message upon form submission
+        function showConfirmation() {
+            const deliveryDateInput = document.getElementById('delivery-date');
+            const today = new Date();
+            const minDeliveryDate = new Date(today);
+            minDeliveryDate.setDate(today.getDate() + 15);
+
+            if (new Date(deliveryDateInput.value) < minDeliveryDate) {
+                alert('Please select a delivery date that is at least 15 days from today.');
+                return;
+            }
+
+            // Redirect to the confirmation page
+            window.location.href = 'request_done.html';
+        }
+
+        // Set initial login status for demonstration
+        document.addEventListener("DOMContentLoaded", function() {
+            const loggedIn = true; // Replace with actual login check
+            if (loggedIn) {
+                document.getElementById('navbar').classList.remove('hidden');
+                document.getElementById('request-header').classList.remove('hidden');
+                document.getElementById('request-form').classList.remove('hidden');
+            } else {
+                window.location.href = 'request_login.html';
+            }
+        });
+    </script>
+</body>
+</html>

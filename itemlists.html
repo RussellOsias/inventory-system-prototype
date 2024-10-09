@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Item Lists</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* General Styling */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f3f3fa;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: #1e90ff;
+        padding: 10px;
+        color: white;
+    }
+
+    .navbar a {
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .navbar a:hover {
+        background-color: #005cbf;
+    }
+
+    /* Inventory Container */
+    .inventory-container {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+        flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    }
+
+    .inventory-column {
+        flex: 1;
+        min-width: 300px; /* Minimum width for columns */
+        margin-right: 20px;
+        margin-bottom: 20px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Inventory Header */
+    .inventory-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+    /* Inventory Item */
+    .inventory-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        margin: 5px 0;
+        background-color: #f0f8ff;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        align-items: center;
+    }
+
+    /* Item Info */
+    .item-info {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-weight: bold;
+    }
+
+    .item-info span {
+        margin-right: 20px;
+        flex: 1;
+    }
+
+    /* Highlight Colors */
+    .highlight-item {
+        color: blue; /* Item Name Highlight */
+    }
+
+    /* Highlight quantity color */
+    .highlight-quantity {
+        font-weight: bold;
+    }
+
+    /* Red, Orange, Green colors for quantities */
+    .quantity-red {
+        color: red;
+    }
+
+    .quantity-orange {
+        color: orange;
+    }
+
+    .quantity-green {
+        color: green;
+    }
+
+    /* Item Actions */
+    .item-actions {
+        display: flex;
+        gap: 5px;
+    }
+
+    .item-actions button {
+        padding: 5px 10px;
+        border-radius: 4px;
+        background-color: #1e90ff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .item-actions button:hover {
+        background-color: #005cbf;
+    }
+
+    /* Button Group */
+    .button-group {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+    }
+
+    .add-button {
+        padding: 10px 15px;
+        border-radius: 5px;
+        background-color: #285ba7;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 1em;
+        flex: 1; /* Flex for responsive width */
+        margin: 0 5px; /* Space between buttons */
+    }
+
+    .add-button:hover {
+        background-color: #218838;
+    }
+
+    /* Input Fields */
+    .input-field {
+        width: calc(30% - 10px);
+        padding: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .inventory-container {
+            flex-direction: column; /* Stack columns on small screens */
+        }
+
+        .inventory-column {
+            margin-right: 0; /* Reset margin on small screens */
+        }
+
+        .add-button {
+            width: 100%; /* Full width buttons on small screens */
+            margin: 5px 0; /* Margin adjustment */
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="admin.html">Back to Dashboard</a>
+  </div>
+
+  <div class="button-group">
+    <button class="add-button" onclick="addSupplies()">Add Supplies</button>
+    <button class="add-button" onclick="addEquipment()">Add Equipment</button>
+  </div>
+
+  <div class="inventory-container">
+    <div class="inventory-column">
+      <h2>Supplies</h2>
+      <div class="inventory-header">
+        <input type="text" class="input-field" placeholder="Item ID">
+        <input type="text" class="input-field" placeholder="Item Name">
+        <input type="number" class="input-field" placeholder="Quantity">
+        <button onclick="addNewSupply()" class="add-button">Add</button>
+      </div>
+      <!-- Supplies List -->
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 1</span>
+          <span class="highlight-item">Printer Paper</span>
+          <span class="highlight-quantity quantity-green">Quantity: 400/500</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 2</span>
+          <span class="highlight-item">Whiteboard Markers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 80/200</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 3</span>
+          <span class="highlight-item">Sticky Notes</span>
+          <span class="highlight-quantity quantity-red">Quantity: 10/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 4</span>
+          <span class="highlight-item">Notebooks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 5</span>
+          <span class="highlight-item">Binders</span>
+          <span class="highlight-quantity quantity-green">Quantity: 150/150</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 6</span>
+          <span class="highlight-item">Scissors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 300/400</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 7</span>
+          <span class="highlight-item">Tape</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 8</span>
+          <span class="highlight-item">Glue Sticks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 60/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 9</span>
+          <span class="highlight-item">Highlighters</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 25/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 10</span>
+          <span class="highlight-item">Paper Clips</span>
+          <span class="highlight-quantity quantity-green">Quantity: 200/300</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 11</span>
+          <span class="highlight-item">Staplers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 12</span>
+          <span class="highlight-item">Tape Dispensers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 13</span>
+          <span class="highlight-item">Envelopes</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/40</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 14</span>
+          <span class="highlight-item">Pencils</span>
+          <span class="highlight-quantity quantity-green">Quantity: 200/300</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 15</span>
+          <span class="highlight-item">Pens</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 30/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 16</span>
+          <span class="highlight-item">Markers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 17</span>
+          <span class="highlight-item">Rubber Bands</span>
+          <span class="highlight-quantity quantity-green">Quantity: 100/150</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 18</span>
+          <span class="highlight-item">Index Cards</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 25/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 19</span>
+          <span class="highlight-item">Notepads</span>
+          <span class="highlight-quantity quantity-green">Quantity: 60/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 20</span>
+          <span class="highlight-item">Clipboard</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 21</span>
+          <span class="highlight-item">Markers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 30/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 22</span>
+          <span class="highlight-item">Post-it Flags</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 23</span>
+          <span class="highlight-item">Tissue Paper</span>
+          <span class="highlight-quantity quantity-green">Quantity: 200/300</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 24</span>
+          <span class="highlight-item">Graph Paper</span>
+          <span class="highlight-quantity quantity-green">Quantity: 80/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 25</span>
+          <span class="highlight-item">Craft Paper</span>
+          <span class="highlight-quantity quantity-green">Quantity: 90/120</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 26</span>
+          <span class="highlight-item">File Folders</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 35/75</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 27</span>
+          <span class="highlight-item">Whiteboard Erasers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 28</span>
+          <span class="highlight-item">Sticky Tape</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 29</span>
+          <span class="highlight-item">Letter Opener</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 30</span>
+          <span class="highlight-item">Tape Measures</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 31</span>
+          <span class="highlight-item">Whiteboard Cleaning Spray</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 10/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 32</span>
+          <span class="highlight-item">Screen Cleaner</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 33</span>
+          <span class="highlight-item">Mouse Pads</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 34</span>
+          <span class="highlight-item">Desk Organizers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 35</span>
+          <span class="highlight-item">Notepads</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 30/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 36</span>
+          <span class="highlight-item">Fountain Pens</span>
+          <span class="highlight-quantity quantity-green">Quantity: 60/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 37</span>
+          <span class="highlight-item">Erasers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 45/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 38</span>
+          <span class="highlight-item">Tacks</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 39</span>
+          <span class="highlight-item">White Out</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 40</span>
+          <span class="highlight-item">Desk Calendars</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 41</span>
+          <span class="highlight-item">Punches</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 42</span>
+          <span class="highlight-item">Rulers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 60/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 43</span>
+          <span class="highlight-item">Tape Measures</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 25/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 44</span>
+          <span class="highlight-item">Colored Pencils</span>
+          <span class="highlight-quantity quantity-green">Quantity: 100/120</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 45</span>
+          <span class="highlight-item">Drafting Pencils</span>
+          <span class="highlight-quantity quantity-green">Quantity: 80/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 46</span>
+          <span class="highlight-item">Lanyards</span>
+          <span class="highlight-quantity quantity-green">Quantity: 150/200</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 47</span>
+          <span class="highlight-item">Clipboard Holders</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 48</span>
+          <span class="highlight-item">Clear Folders</span>
+          <span class="highlight-quantity quantity-green">Quantity: 90/120</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 49</span>
+          <span class="highlight-item">Bookmark Flags</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 50</span>
+          <span class="highlight-item">Document Holders</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 51</span>
+          <span class="highlight-item">Whiteboard Erasers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 52</span>
+          <span class="highlight-item">Highlighters</span>
+          <span class="highlight-quantity quantity-green">Quantity: 70/90</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 53</span>
+          <span class="highlight-item">Rubber Bands</span>
+          <span class="highlight-quantity quantity-green">Quantity: 100/120</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 54</span>
+          <span class="highlight-item">Paper Clips</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 200/250</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 55</span>
+          <span class="highlight-item">Post-It Tabs</span>
+          <span class="highlight-quantity quantity-red">Quantity: 10/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 56</span>
+          <span class="highlight-item">Thumbtacks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 57</span>
+          <span class="highlight-item">Staplers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 58</span>
+          <span class="highlight-item">Paper Trimmer</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 59</span>
+          <span class="highlight-item">Tissue Paper</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 60</span>
+          <span class="highlight-item">Packaging Tape</span>
+          <span class="highlight-quantity quantity-green">Quantity: 100/120</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 61</span>
+          <span class="highlight-item">Binder Clips</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 25/35</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 62</span>
+          <span class="highlight-item">Paper Rolls</span>
+          <span class="highlight-quantity quantity-green">Quantity: 60/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 63</span>
+          <span class="highlight-item">Glue Sticks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 64</span>
+          <span class="highlight-item">Wipe Boards</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 65</span>
+          <span class="highlight-item">Toner Cartridges</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 66</span>
+          <span class="highlight-item">Colored Markers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 75/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 67</span>
+          <span class="highlight-item">Cleaning Wipes</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 68</span>
+          <span class="highlight-item">Flash Drives</span>
+          <span class="highlight-quantity quantity-green">Quantity: 45/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 69</span>
+          <span class="highlight-item">Headphones</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 70</span>
+          <span class="highlight-item">Wireless Chargers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 71</span>
+          <span class="highlight-item">Portable Projectors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/40</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 72</span>
+          <span class="highlight-item">Laptop Stands</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 73</span>
+          <span class="highlight-item">Smartphone Stands</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 74</span>
+          <span class="highlight-item">Cable Organizers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 75</span>
+          <span class="highlight-item">Tablet Holders</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 76</span>
+          <span class="highlight-item">Screen Protectors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 77</span>
+          <span class="highlight-item">Charging Cables</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 78</span>
+          <span class="highlight-item">Networking Cables</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/80</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 79</span>
+          <span class="highlight-item">Bluetooth Speakers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 80</span>
+          <span class="highlight-item">Webcams</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 81</span>
+          <span class="highlight-item">Microphones</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 10/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 82</span>
+          <span class="highlight-item">Projector Screens</span>
+          <span class="highlight-quantity quantity-green">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 83</span>
+          <span class="highlight-item">USB Hubs</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/40</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 84</span>
+          <span class="highlight-item">Surge Protectors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 35/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 85</span>
+          <span class="highlight-item">Chalk</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 86</span>
+          <span class="highlight-item">Easel Pads</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/40</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 87</span>
+          <span class="highlight-item">File Organizers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 88</span>
+          <span class="highlight-item">Staple Removers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 89</span>
+          <span class="highlight-item">Push Pins</span>
+          <span class="highlight-quantity quantity-red">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 90</span>
+          <span class="highlight-item">Index Cards</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/70</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="inventory-column">
+      <h2>Equipment</h2>
+      <div class="inventory-header">
+        <input type="text" class="input-field" placeholder="Item ID">
+        <input type="text" class="input-field" placeholder="Item Name">
+        <input type="number" class="input-field" placeholder="Quantity">
+        <button onclick="addNewEquipment()" class="add-button">Add</button>
+      </div>
+      <!-- Equipment List -->
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 1</span>
+          <span class="highlight-item">Projector</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 2</span>
+          <span class="highlight-item">Laptop</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 3</span>
+          <span class="highlight-item">Whiteboard</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 4</span>
+          <span class="highlight-item">Conference Phone</span>
+          <span class="highlight-quantity quantity-red">Quantity: 1/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 5</span>
+          <span class="highlight-item">Digital Camera</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 25/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 6</span>
+          <span class="highlight-item">Projector Screen</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 7</span>
+          <span class="highlight-item">Printer</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 8</span>
+          <span class="highlight-item">Scanner</span>
+          <span class="highlight-quantity quantity-green">Quantity: 35/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 9</span>
+          <span class="highlight-item">Laptop Stand</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 10/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 10</span>
+          <span class="highlight-item">Smartphone</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 11</span>
+          <span class="highlight-item">Headphones</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 12</span>
+          <span class="highlight-item">External Hard Drive</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 13</span>
+          <span class="highlight-item">USB Flash Drives</span>
+          <span class="highlight-quantity quantity-green">Quantity: 50/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 14</span>
+          <span class="highlight-item">Surge Protectors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 15</span>
+          <span class="highlight-item">Chairs</span>
+          <span class="highlight-quantity quantity-green">Quantity: 10/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 16</span>
+          <span class="highlight-item">Tables</span>
+          <span class="highlight-quantity quantity-green">Quantity: 12/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 17</span>
+          <span class="highlight-item">Whiteboard Markers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 18</span>
+          <span class="highlight-item">Laser Pointer</span>
+          <span class="highlight-quantity quantity-green">Quantity: 8/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 19</span>
+          <span class="highlight-item">Calculators</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 20</span>
+          <span class="highlight-item">Digital Projectors</span>
+          <span class="highlight-quantity quantity-red">Quantity: 4/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 21</span>
+          <span class="highlight-item">Video Conference Camera</span>
+          <span class="highlight-quantity quantity-green">Quantity: 18/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 22</span>
+          <span class="highlight-item">Laptop Carts</span>
+          <span class="highlight-quantity quantity-green">Quantity: 5/8</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 23</span>
+          <span class="highlight-item">HDMI Cables</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 24</span>
+          <span class="highlight-item">Keyboard and Mouse Sets</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 25</span>
+          <span class="highlight-item">Computer Monitors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 26</span>
+          <span class="highlight-item">Speakers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 27</span>
+          <span class="highlight-item">Network Switches</span>
+          <span class="highlight-quantity quantity-green">Quantity: 12/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 28</span>
+          <span class="highlight-item">Network Routers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 8/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 29</span>
+          <span class="highlight-item">HDMI Splitters</span>
+          <span class="highlight-quantity quantity-green">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 30</span>
+          <span class="highlight-item">Wi-Fi Extenders</span>
+          <span class="highlight-quantity quantity-green">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 31</span>
+          <span class="highlight-item">Webcams</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 12/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 32</span>
+          <span class="highlight-item">Digital Notebooks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/25</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 33</span>
+          <span class="highlight-item">Power Banks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 34</span>
+          <span class="highlight-item">Laser Printers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 8/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 35</span>
+          <span class="highlight-item">Ink Cartridges</span>
+          <span class="highlight-quantity quantity-red">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 36</span>
+          <span class="highlight-item">Sticky Notes</span>
+          <span class="highlight-quantity quantity-green">Quantity: 40/60</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 37</span>
+          <span class="highlight-item">Notebooks</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/35</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 38</span>
+          <span class="highlight-item">Paper Clips</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 50/100</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 39</span>
+          <span class="highlight-item">Folding Tables</span>
+          <span class="highlight-quantity quantity-green">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 40</span>
+          <span class="highlight-item">Projector Mounts</span>
+          <span class="highlight-quantity quantity-green">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 41</span>
+          <span class="highlight-item">Audio Interface</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 42</span>
+          <span class="highlight-item">Webcam Tripods</span>
+          <span class="highlight-quantity quantity-green">Quantity: 12/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 43</span>
+          <span class="highlight-item">Graphic Tablets</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 8/12</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 44</span>
+          <span class="highlight-item">Bluetooth Speakers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 45</span>
+          <span class="highlight-item">Virtual Reality Headsets</span>
+          <span class="highlight-quantity quantity-red">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 46</span>
+          <span class="highlight-item">Digital Whiteboards</span>
+          <span class="highlight-quantity quantity-green">Quantity: 4/6</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 47</span>
+          <span class="highlight-item">3D Printers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 1/3</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 48</span>
+          <span class="highlight-item">Document Cameras</span>
+          <span class="highlight-quantity quantity-green">Quantity: 7/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 49</span>
+          <span class="highlight-item">Overhead Projectors</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 5/8</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 50</span>
+          <span class="highlight-item">Smart Boards</span>
+          <span class="highlight-quantity quantity-red">Quantity: 2/4</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 51</span>
+          <span class="highlight-item">Color Printers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 52</span>
+          <span class="highlight-item">Conference Speakers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 53</span>
+          <span class="highlight-item">Portable Projectors</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 4/6</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 54</span>
+          <span class="highlight-item">Sound Systems</span>
+          <span class="highlight-quantity quantity-green">Quantity: 2/4</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 55</span>
+          <span class="highlight-item">DJ Equipment</span>
+          <span class="highlight-quantity quantity-red">Quantity: 1/3</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 56</span>
+          <span class="highlight-item">LED Screens</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 57</span>
+          <span class="highlight-item">Microphones</span>
+          <span class="highlight-quantity quantity-green">Quantity: 20/30</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 58</span>
+          <span class="highlight-item">Noise Cancelling Headphones</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 59</span>
+          <span class="highlight-item">Mobile Chargers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/35</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 60</span>
+          <span class="highlight-item">Guitar Amplifiers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 2/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 61</span>
+          <span class="highlight-item">Photography Lighting Kits</span>
+          <span class="highlight-quantity quantity-green">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 62</span>
+          <span class="highlight-item">Action Cameras</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 4/6</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 63</span>
+          <span class="highlight-item">Drones</span>
+          <span class="highlight-quantity quantity-red">Quantity: 1/2</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 64</span>
+          <span class="highlight-item">Stabilizers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 5/8</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 65</span>
+          <span class="highlight-item">Lens Filters</span>
+          <span class="highlight-quantity quantity-green">Quantity: 15/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 66</span>
+          <span class="highlight-item">Tripods</span>
+          <span class="highlight-quantity quantity-green">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 67</span>
+          <span class="highlight-item">Camera Batteries</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 12/18</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 68</span>
+          <span class="highlight-item">Camera Lenses</span>
+          <span class="highlight-quantity quantity-red">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 69</span>
+          <span class="highlight-item">Sound Mixers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 5/8</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 70</span>
+          <span class="highlight-item">Wireless Microphones</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 71</span>
+          <span class="highlight-item">Stage Lights</span>
+          <span class="highlight-quantity quantity-green">Quantity: 4/6</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 72</span>
+          <span class="highlight-item">Portable Speakers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 2/3</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 73</span>
+          <span class="highlight-item">Mixing Consoles</span>
+          <span class="highlight-quantity quantity-green">Quantity: 5/7</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 74</span>
+          <span class="highlight-item">Recording Devices</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 75</span>
+          <span class="highlight-item">Soundproofing Panels</span>
+          <span class="highlight-quantity quantity-green">Quantity: 8/12</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 76</span>
+          <span class="highlight-item">Laptop Stands</span>
+          <span class="highlight-quantity quantity-green">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 77</span>
+          <span class="highlight-item">Whiteboard Markers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 78</span>
+          <span class="highlight-item">Smartphones</span>
+          <span class="highlight-quantity quantity-red">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 79</span>
+          <span class="highlight-item">Tablet Computers</span>
+          <span class="highlight-quantity quantity-green">Quantity: 10/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 80</span>
+          <span class="highlight-item">External Hard Drives</span>
+          <span class="highlight-quantity quantity-green">Quantity: 12/20</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 81</span>
+          <span class="highlight-item">USB Hubs</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 8/12</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 82</span>
+          <span class="highlight-item">Network Cables</span>
+          <span class="highlight-quantity quantity-green">Quantity: 30/50</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 83</span>
+          <span class="highlight-item">Surge Protectors</span>
+          <span class="highlight-quantity quantity-green">Quantity: 12/15</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 84</span>
+          <span class="highlight-item">Portable Chargers</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 5/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 85</span>
+          <span class="highlight-item">Bluetooth Adapters</span>
+          <span class="highlight-quantity quantity-green">Quantity: 25/35</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 86</span>
+          <span class="highlight-item">Document Shredders</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 6/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 87</span>
+          <span class="highlight-item">Projector Screens</span>
+          <span class="highlight-quantity quantity-green">Quantity: 8/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 88</span>
+          <span class="highlight-item">Electric Kettles</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 7/10</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 89</span>
+          <span class="highlight-item">Water Dispensers</span>
+          <span class="highlight-quantity quantity-red">Quantity: 1/2</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+      <div class="inventory-item">
+        <div class="item-info">
+          <span>ID: 90</span>
+          <span class="highlight-item">Coffee Machines</span>
+          <span class="highlight-quantity quantity-orange">Quantity: 3/5</span>
+        </div>
+        <div class="item-actions">
+          <button>Edit</button>
+          <button>Remove</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+    </div>
+
+  </div>
+
+  <script>
+    function addNewSupply() {
+      // Logic for adding new supply
+    }
+
+    function addNewEquipment() {
+      // Logic for adding new equipment
+    }
+
+    function addSupplies() {
+      // Logic for redirecting to add supplies
+    }
+
+    function addEquipment() {
+      // Logic for redirecting to add equipment
+    }
+  </script>
+</body>
+</html>

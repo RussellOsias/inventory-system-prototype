@@ -1,0 +1,40 @@
+ <!-- Confirmation Message (Hidden by Default) -->
+        <div class="form-container hidden" id="confirmation-message">
+            <h2>Thank You!</h2>
+            <p>Your item request has been submitted successfully. Please wait for the admin to approve it.</p>
+        </div>
+    </div>
+
+    <script>
+        // Check if the user is logged in
+        document.addEventListener("DOMContentLoaded", function() {
+            const loggedIn = sessionStorage.getItem("loggedIn");
+
+            if (loggedIn) {
+                document.getElementById('navbar').classList.remove('hidden');
+                document.getElementById('request-header').classList.remove('hidden');
+                document.getElementById('request-form').classList.remove('hidden');
+            } else {
+                // If not logged in, redirect to the login page
+                window.location.href = 'request_login.html';
+            }
+        });
+
+        // Function to show the confirmation message after request submission
+        function showConfirmation() {
+            const deliveryDateInput = document.getElementById('delivery-date');
+            const today = new Date();
+            const minDeliveryDate = new Date(today);
+            minDeliveryDate.setDate(today.getDate() + 15);
+
+            if (new Date(deliveryDateInput.value) < minDeliveryDate) {
+                alert('Please select a delivery date that is at least 15 days from today.');
+                return;
+            }
+
+            document.getElementById('request-form').classList.add('hidden');
+            document.getElementById('confirmation-message').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

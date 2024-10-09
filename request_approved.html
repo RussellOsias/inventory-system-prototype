@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approved Requests</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e90ff;
+            padding: 10px;
+            color: white;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #005cbf;
+        }
+
+        /* Content Area */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 60px); /* Ensure full height minus navbar */
+            padding: 20px;
+        }
+
+        /* Table Container */
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Limit the width for better readability */
+            width: 100%;
+            overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse; /* Remove spacing between table cells */
+            margin: 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9; /* Zebra stripe effect for better readability */
+        }
+
+        /* Highlight Styles */
+        .highlight-department {
+            font-weight: bold;
+            color: black; /* Bold black for department */
+        }
+
+        .highlight-item {
+            color: blue; /* Blue for item names */
+        }
+
+        .highlight-quantity {
+            color: green; /* Green for quantity */
+        }
+
+        .highlight-date {
+            color: green; /* Red for dates */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; /* Stack navbar items on smaller screens */
+            }
+
+            .table-container {
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            .table th,
+            .table td {
+                font-size: 14px; /* Adjust font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="request.html">Request Items</a>
+        <a href="request_approved.html">Approved Requests</a>
+        <a href="request_declined.html">Declined Requests</a>
+        <a href="request_notification.html">Notifications</a>
+    </div>
+    <div class="content">
+        <h2>Approved Requests</h2>
+        <div class="table-container">
+            <table class="table">
+                <tr>
+                    <th>Department</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Date Approved</th>
+                </tr>
+                <tr>
+                    <td class="highlight-department">CET</td>
+                    <td class="highlight-item">Laboratory Microscope</td>
+                    <td class="highlight-quantity">3</td>
+                    <td class="highlight-date">2024-09-20</td>
+                </tr>
+                <tr>
+                    <td class="highlight-department">CCJ</td>
+                    <td class="highlight-item">Projector</td>
+                    <td class="highlight-quantity">2</td>
+                    <td class="highlight-date">2024-09-21</td>
+                </tr>
+                <tr>
+                    <td class="highlight-department">ENG</td>
+                    <td class="highlight-item">Whiteboard Markers</td>
+                    <td class="highlight-quantity">10</td>
+                    <td class="highlight-date">2024-09-22</td>
+                </tr>
+                <tr>
+                    <td class="highlight-department">MED</td>
+                    <td class="highlight-item">Desks</td>
+                    <td class="highlight-quantity">8</td>
+                    <td class="highlight-date">2024-09-23</td>
+                </tr>
+                <tr>
+                    <td class="highlight-department">BUS</td>
+                    <td class="highlight-item">Chairs</td>
+                    <td class="highlight-quantity">12</td>
+                    <td class="highlight-date">2024-09-24</td>
+                </tr>
+                <tr>
+                    <td class="highlight-department">IT</td>
+                    <td class="highlight-item">Computer Laptops</td>
+                    <td class="highlight-quantity">5</td>
+                    <td class="highlight-date">2024-09-25</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - User Management</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* General Styling */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: rgba(30, 144, 255, 0.9);
+        padding: 15px;
+        color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+
+    .navbar a {
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+    }
+
+    .navbar a:hover {
+        background-color: rgba(0, 92, 191, 0.8);
+        transform: scale(1.05); /* Slightly enlarge the button */
+    }
+
+    .content {
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+    /* Table Container */
+    .table-container {
+        background-color: rgba(255, 255, 255, 0.9);
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+    }
+
+    .table th {
+        background-color: #1e90ff;
+        color: white;
+    }
+
+    .table td {
+        background-color: rgba(240, 248, 255, 0.8); /* Slightly transparent */
+    }
+
+    /* Button Group */
+    .button-group {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    /* Buttons */
+    button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        background-color: #1e90ff;
+        color: white;
+        transition: background-color 0.3s, transform 0.3s; /* Transition effects */
+    }
+
+    button:hover {
+        background-color: #005cbf;
+        transform: scale(1.05); /* Slightly enlarge the button */
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="admin.html">Dashboard</a>
+    <a href="user_department.html">Manage Departments</a>
+    <a href="users.html">Manage Staff</a>
+    <a href="profile.html">Profile</a>
+  </div>
+
+  <div class="content">
+    <!-- Manage Departments -->
+    <div id="departments" class="table-container">
+      <h2>Manage Departments</h2>
+      <table class="table">
+        <tr>
+          <th>Department</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>CET</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>CCJ</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+       
+        <tr>
+          <td>MED</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      </table>
+      <button>Add Department</button>
+    </div>
+
+    <!-- Manage Staff -->
+    <div id="staff" class="table-container">
+      <h2>Manage Staff</h2>
+      <table class="table">
+        <tr>
+          <th>Name</th>
+          <th>Role</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td>Mark Galeos</td>
+          <td>Co-Admin</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Diether Enriquez</td>
+          <td>Staff</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+        
+        <tr>
+          <td>James Carl Majomot</td>
+          <td>Staff</td>
+          <td class="button-group">
+            <button>Edit</button>
+            <button>Delete</button>
+          </td>
+        </tr>
+      </table>
+      <button>Add Staff</button>
+    </div>
+  </div>
+</body>
+</html>

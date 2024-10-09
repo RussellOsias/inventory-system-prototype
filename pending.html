@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pending Requests</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* General Styling */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f9;
+        margin: 0;
+        padding: 0;
+        color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+        display: flex;
+        justify-content: space-around;
+        background-color: #1e90ff;
+        padding: 10px;
+        color: white;
+    }
+
+    .navbar a {
+        color: white;
+        padding: 14px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .navbar a:hover {
+        background-color: #005cbf;
+    }
+
+    /* Sidebar */
+    .sidebar {
+        width: 200px;
+        background-color: #f8f9fa;
+        padding: 20px;
+        position: fixed;
+        height: 100%;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar a {
+        display: block;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .sidebar a:hover {
+        background-color: #e9ecef;
+    }
+
+    /* Content Area */
+    .content {
+        margin-left: 220px; /* Leave space for sidebar */
+        padding: 20px;
+    }
+
+    /* Table Container */
+    .table-container {
+        background-color: white;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Table Styles */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+
+    .table th {
+        background-color: #1e90ff;
+        color: white;
+    }
+
+    .table td {
+        background-color: #f0f8ff;
+    }
+
+    /* Highlight Styles */
+    .highlight-department {
+        font-weight: bold;
+        color: black;
+    }
+
+    .highlight-item {
+        color: blue;
+    }
+
+    .highlight-quantity {
+        color: green;
+    }
+
+    .highlight-date {
+        color: red;
+    }
+
+    .status-pending {
+        color: #ff9800; /* Orange color for pending status */
+        font-weight: bold;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px; /* Space between buttons */
+    }
+
+    .approve, .decline {
+        padding: 5px 10px;
+        border-radius: 4px;
+        border: none;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .approve {
+        background-color: #28a745; /* Green for approve */
+    }
+
+    .approve:hover {
+        background-color: #218838; /* Darker green on hover */
+    }
+
+    .decline {
+        background-color: #dc3545; /* Red for decline */
+    }
+
+    .decline:hover {
+        background-color: #c82333; /* Darker red on hover */
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 100%;
+            position: relative; /* Change sidebar positioning */
+            height: auto; /* Auto height on small screens */
+        }
+
+        .content {
+            margin-left: 0; /* Remove left margin */
+        }
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <a href="admin.html">Back to dashboard</a>
+    <a href="approved.html">See approved requests</a>
+    <a href="itemlists.html">Item Lists</a>
+  </div>
+
+  <div class="content">
+    <div class="table-container">
+      <h2>Pending Requests</h2>
+      <table class="table">
+        <tr>
+          <th>Department</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Date Requested</th>
+          <th>Desired Delivery Date</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+        <tr>
+          <td class="highlight-department">CET</td>
+          <td class="highlight-item">Laboratory Microscope</td>
+          <td class="highlight-quantity">10</td>
+          <td class="highlight-date">2024-10-01</td>
+          <td class="highlight-date">2024-10-30</td>
+          <td class="status-pending">Pending</td>
+          <td class="button-group">
+            <button class="approve" onclick="approveRequest()">Approve</button>
+            <button class="decline">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="highlight-department">CCJ</td>
+          <td class="highlight-item">Projector</td>
+          <td class="highlight-quantity">5</td>
+          <td class="highlight-date">2024-10-02</td>
+          <td class="highlight-date">2024-10-26</td>
+          <td class="status-pending">Pending</td>
+          <td class="button-group">
+            <button class="approve" onclick="approveRequest()">Approve</button>
+            <button class="decline">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="highlight-department">ENG</td>
+          <td class="highlight-item">Whiteboard Markers</td>
+          <td class="highlight-quantity">8</td>
+          <td class="highlight-date">2024-10-03</td>
+          <td class="highlight-date">2024-10-18</td>
+          <td class="status-pending">Pending</td>
+          <td class="button-group">
+            <button class="approve" onclick="approveRequest()">Approve</button>
+            <button class="decline">Decline</button>
+          </td>
+        </tr>
+        <tr>
+          <td class="highlight-department">MED</td>
+          <td class="highlight-item">Table</td>
+          <td class="highlight-quantity">12</td>
+          <td class="highlight-date">2024-10-04</td>
+          <td class="highlight-date">2024-10-20</td>
+          <td class="status-pending">Pending</td>
+          <td class="button-group">
+            <button class="approve" onclick="approveRequest()">Approve</button>
+            <button class="decline">Decline</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function approveRequest() {
+      alert("Request Approved! Moving to Approved Requests...");
+      // Optionally, you could toggle to the approved section or dynamically update
+    }
+  </script>
+</body>
+</html>

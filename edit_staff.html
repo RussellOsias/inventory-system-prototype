@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Staff</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Back Button */
+        .back-button {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #1e90ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #005cbf;
+        }
+
+        /* Form Container */
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="admin.html">Dashboard</a>
+        <a href="user_department.html">Manage Departments</a>
+        <a href="users.html">Manage Staff</a>
+        <a href="profile.html">Profile</a>
+    </div>
+
+    <div class="content">
+        <h2>Edit Staff Member</h2>
+        <a href="users.html" class="back-button">Back to Manage Staff</a>
+        <div class="form-container">
+            <form id="edit-staff-form">
+                <label for="staff-name">Staff Member</label>
+                <input type="text" id="staff-name" required>
+
+                <label for="staff-email">Email</label>
+                <input type="text" id="staff-email" required>
+
+                <label for="staff-phone">Phone Number</label>
+                <input type="text" id="staff-phone" required>
+
+                <label for="staff-password">Password</label>
+                <input type="password" id="staff-password" required>
+
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            var results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        // Populate the form fields with URL parameters
+        document.addEventListener('DOMContentLoaded', function() {
+            const staffName = getUrlParameter('name');
+            const staffEmail = getUrlParameter('email');
+            const staffPhone = getUrlParameter('phone');
+
+            document.getElementById('staff-name').value = staffName;
+            document.getElementById('staff-email').value = staffEmail;
+            document.getElementById('staff-phone').value = staffPhone;
+        });
+
+        // Handle form submission
+        document.getElementById('edit-staff-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            // Here you can add code to submit the form data to your server
+            alert('Staff member updated successfully!');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Declined Requests</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #1e90ff;
+            padding: 10px;
+            color: white;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .navbar a {
+            color: white;
+            padding: 14px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            background-color: #005cbf;
+        }
+
+        /* Content Area */
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: calc(100vh - 60px); /* Ensure full height minus navbar */
+            padding: 20px;
+        }
+
+        /* Table Container */
+        .table-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Limit the width for better readability */
+            width: 100%;
+            overflow-x: auto; /* Allow horizontal scrolling for smaller screens */
+        }
+
+        /* Table Styles */
+        .table {
+            width: 100%;
+            border-collapse: collapse; /* Remove spacing between table cells */
+            margin: 0;
+        }
+
+        .table th,
+        .table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .table th {
+            background-color: #1e90ff;
+            color: white;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9; /* Zebra stripe effect for better readability */
+        }
+
+        /* Highlighting Styles */
+        .department {
+            font-weight: bold;
+            color: black;
+        }
+
+        .item {
+            color: blue;
+        }
+
+        .quantity {
+            color: green;
+        }
+
+        .date-declined {
+            color: red;
+        }
+
+        .declined {
+            color: red; /* Declined text in red */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column; /* Stack navbar items on smaller screens */
+            }
+
+            .table-container {
+                padding: 15px; /* Adjust padding for smaller screens */
+            }
+
+            .table th,
+            .table td {
+                font-size: 14px; /* Adjust font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar" id="navbar">
+        <a href="request.html">Request Items</a>
+        <a href="request_approved.html">Approved Requests</a>
+        <a href="request_declined.html">Declined Requests</a>
+        <a href="request_notification.html">Notifications</a>
+    </div>
+    <div class="content">
+        <h2>Declined Requests</h2>
+        <div class="table-container">
+            <table class="table">
+                <tr>
+                    <th>Department</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Date Declined</th>
+                </tr>
+                <tr>
+                    <td class="department">CET</td>
+                    <td class="item">Experimental Chemistry Kit</td>
+                    <td class="quantity">2</td>
+                    <td class="date-declined">2024-09-28</td>
+                </tr>
+                <tr>
+                    <td class="department">CCJ</td>
+                    <td class="item">Additional Laboratory Supplies</td>
+                    <td class="quantity">15</td>
+                    <td class="date-declined">2024-09-29</td>
+                </tr>
+                <tr>
+                    <td class="department">ENG</td>
+                    <td class="item">Textbooks for Literature Course</td>
+                    <td class="quantity">20</td>
+                    <td class="date-declined">2024-09-30</td>
+                </tr>
+                <tr>
+                    <td class="department">MED</td>
+                    <td class="item">Microscopes</td>
+                    <td class="quantity">4</td>
+                    <td class="date-declined">2024-10-01</td>
+                </tr>
+                <tr>
+                    <td class="department">BUS</td>
+                    <td class="item">Conference Room Projector</td>
+                    <td class="quantity">1</td>
+                    <td class="date-declined">2024-10-02</td>
+                </tr>
+                <tr>
+                    <td class="department">IT</td>
+                    <td class="item">Server Upgrade</td>
+                    <td class="quantity">2</td>
+                    <td class="date-declined">2024-10-03</td>
+                </tr>
+            </table>
+      
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Additional styles for highlighting */
+    .highlight-item {
+        color: blue; /* Item Name Highlight */
+        font-weight: normal; /* Reset weight to normal */
+    } 
+
+    .highlight-quantity {
+        color: green; /* Quantity Highlight */
+        font-weight: normal; /* Reset weight to normal */
+    }
+
+    .highlight-department {
+        font-weight: bold; /* Make department bold */
+        color: black; /* Ensure the color is black */
+    }
+  </style>
+</head>
+<body>
+  <!-- Top Navbar -->
+  <div class="navbar">
+    <a href="notification.html">Notifications</a>
+    <a href="dashboard.html">Admin Dashboard</a>
+    <a href="itemlists.html">Item Lists</a>
+  </div>
+
+  <!-- Sidebar for Admin -->
+  <div class="sidebar">
+    <a href="pending.html">Pending Requests</a>
+    <a href="pending.html">Pending Requests</a>
+    <a href="approved.html">Approved Requests</a>
+    
+    <a href="login.html">Logout</a>
+    
+  </div>
+
+  <!-- Admin Dashboard Content -->
+  <div id="admin-dashboard" class="content">
+    <div id="pending" class="table-container">
+      <h2>Pending Requests</h2>
+      <table class="table">
+        <tr>
+          <th>Department</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Status</th>
+        </tr>
+        <tr>
+          <td class="highlight-department">CET</td>
+          <td class="highlight-item">Laptop</td>
+          <td class="highlight-quantity">10</td>
+          <td class="status-pending">Pending</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">ENG</td>
+          <td class="highlight-item">Textbooks</td>
+          <td class="highlight-quantity">5</td>
+          <td class="status-pending">Pending</td>
+        </tr>
+      </table>
+    </div>
+
+    <div id="approved" class="table-container hidden">
+      <h2>Approved Requests</h2>
+      <table class="table">
+        <tr>
+          <th>Department</th>
+          <th>Item</th>
+          <th>Quantity</th>
+          <th>Date Approved</th>
+        </tr>
+        <tr>
+          <td class="highlight-department">CET</td>
+          <td class="highlight-item">Projector</td>
+          <td class="highlight-quantity">2</td>
+          <td>2024-09-20</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">CCJ</td>
+          <td class="highlight-item">Whiteboard</td>
+          <td class="highlight-quantity">1</td>
+          <td>2024-09-21</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">ENG</td>
+          <td class="highlight-item">Laptop</td>
+          <td class="highlight-quantity">3</td>
+          <td>2024-09-22</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">MED</td>
+          <td class="highlight-item">Microscope</td>
+          <td class="highlight-quantity">5</td>
+          <td>2024-09-23</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">BUS</td>
+          <td class="highlight-item">Calculators</td>
+          <td class="highlight-quantity">20</td>
+          <td>2024-09-24</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">IT</td>
+          <td class="highlight-item">External Hard Drives</td>
+          <td class="highlight-quantity">15</td>
+          <td>2024-09-25</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">ARC</td>
+          <td class="highlight-item">3D Printer</td>
+          <td class="highlight-quantity">1</td>
+          <td>2024-09-26</td>
+        </tr>
+        <tr>
+          <td class="highlight-department">MTH</td>
+          <td class="highlight-item">Graphing Calculators</td>
+          <td class="highlight-quantity">10</td>
+          <td>2024-09-27</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function approveRequest() {
+      alert("Request Approved! Moving to Approved Requests...");
+      // Optionally you could toggle to approved section or dynamically update
+    }
+
+    function showSection(sectionId) {
+      document.querySelectorAll('.table-container').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(sectionId).classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>
